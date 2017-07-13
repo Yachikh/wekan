@@ -19,6 +19,12 @@ template(name="listBody")
           a.open-minicard-composer.js-card-composer.js-open-inlined-form
             i.fa.fa-plus
             | {{_ 'add-card'}}
+template(name="listDatesDiff")
+  h2.list-header-name
+    | {{_ 'remaining-time'}}
+  a.card-date(title="{{showTitle}}" class="{{classes}}")
+    each cards
+      +RemTime
 
 template(name="addCardForm")
   .minicard.minicard-composer.js-composer

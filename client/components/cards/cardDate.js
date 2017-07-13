@@ -132,6 +132,10 @@ Template.dateBadge.helpers({
 }).register('editCardDueDatePopup');
 
 
+// Declare variables
+let a = 0;
+let b = 0;
+
 // Display start & due dates
 const CardDate = BlazeComponent.extendComponent({
   template() {
@@ -168,6 +172,8 @@ class CardStartDate extends CardDate {
     self.autorun(() => {
       self.date.set(moment(self.data().startAt));
     });
+    //g get start date
+    a = moment(this.date.get());
   }
 
   classes() {
@@ -197,6 +203,8 @@ class CardDueDate extends CardDate {
     self.autorun(() => {
       self.date.set(moment(self.data().dueAt));
     });
+    // get due date
+    b = moment(this.date.get());
   }
 
   classes() {
@@ -232,3 +240,15 @@ CardDueDate.register('cardDueDate');
     return this.date.get().format('l');
   }
 }).register('minicardDueDate');
+
+(class extends CardDate {
+
+  showDate() {
+    // show date in the format x Months y Days z Hours
+    const ms = moment(b, 'months').diff(moment(a, 'months'));
+    const ds = moment(b, 'days').diff(moment(a, 'days'));
+    const hs = moment(b, 'hours').diff(moment(a, 'hours'));
+    return moment.duration(ms).months() + ' M ' + moment.duration(ds).days() + ' D ' + moment.duration(hs).hours() + ' H';
+  }
+
+}).register('RemTime');
